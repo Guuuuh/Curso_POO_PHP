@@ -3,5 +3,6 @@
 require_once 'src/Conta.php';
 
 $primeiraConta = new Conta();
-$primeiraConta->sacar(300); // Ok
-$primeiraConta->saldo -= 300; // Errado
+$primeiraConta->depositar(500);
+$primeiraConta->sacar(300);
+echo $primeiraConta->getSaldo();
