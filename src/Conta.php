@@ -1,12 +1,25 @@
 
 <?php
 
-class Conta {
-    private string $cpfTitular;
-    private  string $nomeTitular;
-    private float $saldo = 0;
+class Conta
+{
 
-    public function sacar(float $valorASacar)
+    public readonly string $cpfTitular;
+    public readonly string $nomeTitular;
+    private float $saldo;
+    private static int $numeroDeContas = 0;
+
+    public function __construct(string $cpfTitular, string $nomeTitular)
+    {
+        $this->cpfTitular = $cpfTitular;
+        $this->validarNomeDoTitular($nomeTitular);
+        $this->nomeTitular = $nomeTitular;
+        $this->saldo = 0;
+
+        self::$numeroDeContas++;
+    }
+
+    public function sacar(float $valorASacar) : void
     {
         if ($valorASacar > $this->saldo) {
             echo "Saldo Insuficiente!!!";
@@ -16,9 +29,9 @@ class Conta {
         $this->saldo -= $valorASacar;
     }
 
-    public function depositar(float $valorADepositar) : void
+    public function depositar(float $valorADepositar): void
     {
-        if($valorADepositar <= 0) {
+        if ($valorADepositar <= 0) {
             echo "Valor inválido!!!";
             return;
         }
@@ -26,7 +39,7 @@ class Conta {
         $this->saldo += $valorADepositar;
     }
 
-    public function transferir(float $valorATransferir, Conta $contaDestino) : void
+    public function transferir(float $valorATransferir, Conta $contaDestino): void
     {
         if ($valorATransferir > $this->saldo) {
             echo "Saldo Indisponível";
@@ -36,16 +49,15 @@ class Conta {
 
         $this->sacar($valorATransferir);
         $contaDestino->depositar($valorATransferir);
-        }
-
-    public function getCpfTitular(): string
-    {
-        return $this->cpfTitular;
     }
 
-    public function getNomeTitular(): string
+
+    private function validarNomeDoTitular(string $nomeTitular) : void
     {
-        return $this->nomeTitular;
+        if (strlen($nomeTitular) < 5) {
+            echo "Nome precisa ter pelo menos 5 caracteres";
+            exit();
+        }
     }
 
     public function getSaldo(): float
@@ -53,14 +65,8 @@ class Conta {
         return $this->saldo;
     }
 
-    public function setCpfTitular(string $cpfTitular): void
+    public static function getNumeroDeContas() : int
     {
-        $this->cpfTitular = $cpfTitular;
+        return self::$numeroDeContas;
     }
-
-    public function setNomeTitular(string $nomeTitular): void
-    {
-        $this->nomeTitular = $nomeTitular;
-    }
-
 }
