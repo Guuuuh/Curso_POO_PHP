@@ -1,16 +1,16 @@
 <?php
 
 require_once 'src/Conta.php';
+require_once 'src/Cliente.php';
 
-$primeiraConta = new Conta("11122233300", "Gustavo");
+$cpf = new Cpf('111.222.333-00');
+$cliente = new Cliente($cpf,  nome: 'Gustavo Henrique');
+
+$primeiraConta = new Conta($cliente);
+
 $primeiraConta->depositar(500);
 $primeiraConta->sacar(300);
 
-echo $primeiraConta->nomeTitular . PHP_EOL;
-echo $primeiraConta->cpfTitular . PHP_EOL;
-echo $primeiraConta->getSaldo() . PHP_EOL;
-
-$segundaConta = new Conta("44455566600", "Adalberto");
-new Conta("77788899900", 'Teste');
+var_dump($primeiraConta);
 
 echo Conta::getNumeroDeContas();
