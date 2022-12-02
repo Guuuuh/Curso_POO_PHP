@@ -1,7 +1,9 @@
 // Constructor Property Promotion Example
 <?php
 
-class Pessoa
+use Alura\Banco\Model\Pessoa;
+
+class Pessoa2
 {
 // os atributos são iniciados nos parametros do construtor;
     public function __construct(
